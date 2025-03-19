@@ -1,0 +1,103 @@
+﻿@model PersonViewModel
+
+<h1>Persons List</h1>
+
+<div class="mb-3">
+    <form method="get" asp-action="List">
+        <input type="text" name="searchTerm" value="@Model.SearchTerm" placeholder="Search by name or ID"
+            class="form-control w-50 d-inline-block" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+<div class="mb-3" >
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPersonModal">
+        Add New Person
+    </button>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>ID Number</th>
+            <th>Account Number</th>
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model.Persons)
+        {
+            <tr>
+                <td>@person.Code</td>
+                <td>@person.Name</td>
+                <td>@person.Surname</td>
+
+                <td>@person.IdNumber</td>
+                <td>
+                    @foreach (var account in person.Accounts)
+                    {
+                        <p>@account.AccountNumber</p> <!-- Display Account Number -->
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Person" asp-action="Details" asp-route-id="@person.Code"
+                        class="btn btn-info btn-sm">View</a>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editPersonModal"
+                        data-code="@person.Code" data-name="@person.Name" data-surname="@person.Surname"
+                        data-idnumber="@person.IdNumber">
+                        Edit
+                    </button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a class="page-link"
+                    href="@Url.Action("List", new { pageNumber = i, searchTerm = Model.SearchTerm })">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Add Person Modal -->
+<partial name="_PersonModal" model="new Person()" />
+<!-- Edit Person Modal -->
+<partial name="_editPersonModal" model="new Person()" />
+
+
+</div>
+
+@section Scripts {
+
+    <script>
+        $('#editPersonModal').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var code = button.data('code');
+            var name = button.data('name');
+            var surname = button.data('surname');
+            var idNumber = button.data('idnumber');
+
+            console.log("Code:", code);
+            console.log("Name:", name);
+            console.log("Surname:", surname);
+            console.log("ID Number:", idNumber);
+
+            var modal = $(this);
+            modal.find('.modal-title').text('Edit Person' + name);
+            modal.find('#Code').val(code);
+            modal.find('#Name').val(name);
+            modal.find('#Surname').val(surname);
+            modal.find('#IdNumber').val(idNumber);
+        })
+    </script>
+}

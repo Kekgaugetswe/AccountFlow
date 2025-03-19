@@ -1,0 +1,36 @@
+﻿
+@model TransactionViewModel
+
+<h2>List of Transactions</h2>
+<a href="@Url.Action("Create", "Transaction")">Create New Transaction</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Account</th>
+            <th>Transaction Date</th>
+            <th>Capture Date</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model.transactions)
+        {
+            <tr>
+                <td>@transaction.Code</td>
+                <td>@transaction.Account.AccountNumber</td>
+                <td>@transaction.TransactionDate</td>
+                <td>@transaction.CaptureDate</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Description</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Transaction", new { id = transaction.Code })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Transaction", new { id = transaction.Code })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

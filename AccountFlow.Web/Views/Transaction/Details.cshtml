@@ -1,0 +1,39 @@
+﻿@model Transaction
+
+<div class="container my-5">
+    <!-- Heading -->
+    <h1 class="mb-4 text-center">Transaction Details</h1>
+
+    <!-- Card for Transaction Details -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Transaction Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Transaction Code -->
+                <div class="col-md-6 mb-3">
+                    <p><strong>Transaction Code:</strong> @Model.Code</p>
+                </div>
+                
+                <!-- Amount -->
+                <div class="col-md-6 mb-3">
+                    <p><strong>Amount:</strong> @Model.Amount.ToString("C", new System.Globalization.CultureInfo("en-ZA"))</p>
+                </div>
+
+                <!-- Description -->
+                <div class="col-md-12 mb-3">
+                    <p><strong>Description:</strong> @Model.Description</p>
+                </div>
+
+                <!-- Transaction Date -->
+                <div class="col-md-6 mb-3">
+                    <p><strong>Transaction Date:</strong> @Model.TransactionDate</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>

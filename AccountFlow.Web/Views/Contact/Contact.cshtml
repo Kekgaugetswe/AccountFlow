@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<h1>Contact Us</h1>
+
+<p>If you have any questions or need assistance, feel free to reach out to us using the form below.</p>
+
+<form method="post" asp-action="Submit">
+    <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="Name" required />
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="Email" required />
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" name="Message" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Message</button>
+</form>
+
+<div class="mt-4">
+    <h3>Our Contact Information</h3>
+    <p><strong>Email:</strong> kekgaugetswe@AccountFlow.com</p>
+    <p><strong>Phone:</strong> +27620205410</p>
+</div>

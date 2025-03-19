@@ -1,0 +1,36 @@
+﻿@model Person
+<!-- Edit Person Modal -->
+<div class="modal fade" id="editPersonModal" tabindex="-1" aria-labelledby="editPersonModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPersonModalLabel">Edit Person</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="EditPerson" asp-controller="Person" method="post">
+                    <input type="hidden" name="_method" value="PUT" />
+                    <input type="hidden" id="Code" name="Code" />
+
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" required />
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Surname" class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="Surname" name="Surname" required />
+                        <span class="text-danger" asp-validation-for="Surname"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="IdNumber" class="form-label">ID Number</label>
+                        <input type="text" class="form-control" id="IdNumber" name="IdNumber" required />
+                        <span class="text-danger" asp-validation-for="IdNumber"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

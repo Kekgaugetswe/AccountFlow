@@ -1,0 +1,32 @@
+﻿@model Person
+<!-- Add Person Modal -->
+<div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPersonModalLabel">Add New Person</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="CreatePerson" method="post">
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Name</label>
+                        <input asp-for="Name" class="form-control" id="Name" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Surname" class="form-label">Surname</label>
+                        <input asp-for="Surname" class="form-control" id="Surname" required />
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="IdNumber" class="form-label">ID Number</label>
+                        <input asp-for="IdNumber" class="form-control" id="IdNumber" required />
+                        <span asp-validation-for="IdNumber" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

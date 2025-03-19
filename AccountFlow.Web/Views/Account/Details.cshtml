@@ -1,0 +1,82 @@
+﻿@model AccountFlow.Web.ViewModels.Accounts.AccountViewModel
+
+<h1>Account Details for @Model.AccountNumber</h1>
+
+<p>Account Balance: @Model.Balance</p>
+<p>Account Holder: @Model.PersonName</p>
+
+<h3>Transactions</h3>
+
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+    Add Transaction
+</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Transaction Code</th>
+            <th>Amount</th>
+            <th>Transaction Date</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model.Transactions)
+        {
+            <tr>
+                <td>@transaction.Code</td>
+                <td>@transaction.Amount.ToString("C", new System.Globalization.CultureInfo("en-ZA"))</td>
+                <td>@transaction.TransactionDate</td>
+                <td>@transaction.Description</td>
+                <td>
+                    <!-- View Button -->
+                    <a asp-controller="Transaction" asp-action="Details" asp-route-id="@transaction.Code"
+                        class="btn btn-info btn-sm">View Details</a>
+
+                    <!-- Dropdown Menu for Actions -->
+                    <div class="dropdown d-inline">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            ...
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <!-- Approve Button -->
+                            <li>
+                                <form asp-controller="Transaction" asp-action="Approve" asp-route-id="@transaction.Code"
+                                    method="post">
+                                    <button type="submit" class="dropdown-item">Approve</button>
+                                </form>
+                            </li>
+
+                            <!-- Reverse Button -->
+                            <li>
+                                <form asp-controller="Transaction" asp-action="Reverse" asp-route-id="@transaction.Code"
+                                    method="post">
+                                    <button type="submit" class="dropdown-item">Reverse</button>
+                                </form>
+                            </li>
+
+                            <!-- Refund Button -->
+                            <li>
+                                <form asp-controller="Transaction" asp-action="Refund" asp-route-id="@transaction.Code"
+                                    method="post">
+                                    <button type="submit" class="dropdown-item">Refund</button>
+                                </form>
+                            </li>
+
+                            <!-- Delete Button -->
+                            <li>
+                                <form asp-controller="Transaction" asp-action="Delete" asp-route-id="@transaction.Code"
+                                    method="post">
+                                    <button type="submit" class="dropdown-item"
+                                        onclick="return confirm('Are you sure you want to delete this transaction?');">Delete</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

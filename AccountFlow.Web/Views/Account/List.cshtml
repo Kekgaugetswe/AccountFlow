@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Account>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Account Number</th>
+            <th>Person</th>
+            <th>Outstanding Balance</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model)
+        {
+            <tr>
+                <td>@account.Code</td>
+                <td>@account.AccountNumber</td>
+                <td>@(account.Person != null ? account.Person.Name + " " + account.Person.Surname : "No Person")</td>
+                <td>@account.OutstandingBalance</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Account", new { id = account.Code })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Account", new { id = account.Code })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
