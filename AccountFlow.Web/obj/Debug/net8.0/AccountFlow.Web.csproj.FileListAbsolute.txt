@@ -75,3 +75,4 @@
 /Users/KekgaugetsweS/Development/learning/AccountFlow.Web/obj/Debug/net8.0/AccountF.A41E5A5B.Up2Date
 /Users/KekgaugetsweS/Development/learning/AccountFlow.Web/bin/Debug/net8.0/libman.json
 /Users/KekgaugetsweS/Development/learning/AccountFlow.Web/bin/Debug/net8.0/AccountFlow.Web.staticwebassets.runtime.json
+/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/obj/Debug/net8.0/AccountFlow.Web.sourcelink.json

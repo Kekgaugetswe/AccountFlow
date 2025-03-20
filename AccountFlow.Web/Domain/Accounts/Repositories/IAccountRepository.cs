@@ -10,5 +10,6 @@ public interface IAccountRepository
     Task<Account> GetAccountByIdAsync(int code);
 
     Task CreateAccountAsync(Account account);
+    Task UpdateAccountAsync(Account account);
 
 }

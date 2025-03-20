@@ -16,7 +16,7 @@ public class TransactionRepository(DataContext context) : ITransactionRepository
 
     public async Task<Transaction> GetTransactionByCodeAsync(int code)
     {
-       return await context.Transactions.Include(t=> t.Account).FirstOrDefaultAsync(t=> t.Code == code);
+        return await context.Transactions.Include(t => t.Account).FirstOrDefaultAsync(t => t.Code == code);
     }
 
     public async Task<IEnumerable<Transaction>> GetTransactionsByAccountNumberAsync(string accountNumber)
@@ -29,5 +29,17 @@ public class TransactionRepository(DataContext context) : ITransactionRepository
         return transactions.AsEnumerable();
     }
 
-    
+    public async Task CreateTransactionAsync(Transaction transaction)
+    {
+        await context.Transactions.AddAsync(transaction);
+        await context.SaveChangesAsync();
+    }
+
+    public async Task UpdateTransactionASync(Transaction transaction)
+    {
+         context.Transactions.Update(transaction);
+         await context.SaveChangesAsync();
+    }
+
+
 }

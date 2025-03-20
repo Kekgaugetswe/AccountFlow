@@ -9,4 +9,7 @@ public interface ITransactionRepository
     Task<IEnumerable<Transaction>> GetTransactionsByAccountNumberAsync(string accountNumber);
     Task<Transaction> GetTransactionByCodeAsync(int code);
 
+    Task CreateTransactionAsync(Transaction transaction);
+    Task UpdateTransactionASync(Transaction transaction);
+
 }

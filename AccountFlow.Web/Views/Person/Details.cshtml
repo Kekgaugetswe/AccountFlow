@@ -22,7 +22,7 @@
 </table>
 
 <h3>Accounts:</h3>
-<button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addOrEditAccountModal">
+<button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-personcode="@Model.Code" data-bs-target="#addOrEditAccountModal">
     Add Account
 </button>
 
@@ -43,16 +43,22 @@
                     <td>@account.AccountNumber</td>
                     <td>@account.OutstandingBalance.ToString("C", new System.Globalization.CultureInfo("en-ZA"))</td>
                     <td>
-                        <a asp-controller="Account" asp-action="Details" asp-route-id="@account.Code" class="btn btn-info btn-sm">View Details</a>
+                        <a asp-controller="Account" asp-action="Details" asp-route-id="@account.Code"
+                            class="btn btn-info btn-sm">View Details</a>
 
                         <!-- Edit Button -->
-                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAccountModal-@account.Code">
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addOrEditAccountModal" data-mode="edit" data-code="@account.Code"
+                            data-personcode="@account.PersonCode" data-accountnumber="@account.AccountNumber"
+                            data-outstandingbalance="@account.OutstandingBalance">
                             Edit
                         </button>
 
                         <!-- Delete/Close Button -->
-                        <form asp-controller="Account" asp-action="Delete" asp-route-id="@account.Code" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to close this account?');">
+                        <form asp-controller="Account" asp-action="Delete" asp-route-id="@account.Code" method="post"
+                            class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure you want to close this account?');">
                                 Close
                             </button>
                         </form>
@@ -67,4 +73,49 @@ else
     <p>No accounts available.</p>
 }
 
-<partial name="_AddOrEditAccountModal" model="new Account{PersonCode = Model.Code}"/>
+<partial name="_AddOrEditAccountModal" model="new Account()" />
+
+
+@section Scripts {
+    <script>
+        $('#addOrEditAccountModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var code = button.data('code');
+            var personCode = button.data('personcode');
+            var accountNumber = button.data('accountnumber');
+            var outstandingBalance = button.data('outstandingbalance');
+
+            console.log("Account Code:", code);
+            console.log("Person Code:", personCode);
+            console.log("Account Number:", accountNumber);
+            console.log("Outstanding Balance:", outstandingBalance);
+
+            var modal = $(this);
+
+            if (code) {  // If code exists, it means we are editing an account
+                modal.find('.modal-title').text('Edit Account');
+                modal.find('#AccountCode').val(code);
+                modal.find('input[name="PersonCode"]').val(personCode);
+                modal.find('input[name="AccountNumber"]').val(accountNumber);
+                modal.find('input[name="OutstandingBalance"]').val(outstandingBalance);
+                modal.find('#accountModalSubmit').text('Update Account');
+
+                // Set form action to EditAccount
+                $('#accountForm').attr('action', '/Account/EditAccount');
+            } else {  // If no code, it's a new account
+                modal.find('.modal-title').text('Add New Account');
+                modal.find('#AccountCode').val(0);
+                modal.find('input[name="PersonCode"]').val(personCode);
+                modal.find('input[name="AccountNumber"]').val('');
+                modal.find('input[name="OutstandingBalance"]').val('');
+                modal.find('#accountModalSubmit').text('Add Account');
+
+                console.log(personCode);
+
+                // Set form action to SaveAccount
+                $('#accountForm').attr('action', '/Account/CreateAccount');
+            }
+        });
+    </script>
+
+}

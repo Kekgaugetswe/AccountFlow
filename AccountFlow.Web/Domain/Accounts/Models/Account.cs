@@ -13,7 +13,7 @@ public class Account
     [Column("person_code")]
     public int  PersonCode { get; set; }
     [Column("account_number")]
-    public string AccountNumber { get; set; }
+    public string AccountNumber { get; set; } = string.Empty;
 
     [Column("outstanding_balance")]
     public decimal OutstandingBalance { get; set; }

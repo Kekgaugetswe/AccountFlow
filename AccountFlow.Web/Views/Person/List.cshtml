@@ -10,8 +10,8 @@
     </form>
 </div>
 
-<div class="mb-3" >
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPersonModal">
+<div class="mb-3">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-code="@Model.Person?.Code" data-bs-target="#addPersonModal">
         Add New Person
     </button>
 </div>
@@ -45,7 +45,7 @@
                 <td>
                     <a asp-controller="Person" asp-action="Details" asp-route-id="@person.Code"
                         class="btn btn-info btn-sm">View</a>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editPersonModal"
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addPersonModal"
                         data-code="@person.Code" data-name="@person.Name" data-surname="@person.Surname"
                         data-idnumber="@person.IdNumber">
                         Edit
@@ -71,8 +71,7 @@
 
 <!-- Add Person Modal -->
 <partial name="_PersonModal" model="new Person()" />
-<!-- Edit Person Modal -->
-<partial name="_editPersonModal" model="new Person()" />
+
 
 
 </div>
@@ -80,7 +79,7 @@
 @section Scripts {
 
     <script>
-        $('#editPersonModal').on('show.bs.modal', function(event){
+        $('#addPersonModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var code = button.data('code');
             var name = button.data('name');
@@ -93,11 +92,29 @@
             console.log("ID Number:", idNumber);
 
             var modal = $(this);
-            modal.find('.modal-title').text('Edit Person' + name);
-            modal.find('#Code').val(code);
-            modal.find('#Name').val(name);
-            modal.find('#Surname').val(surname);
-            modal.find('#IdNumber').val(idNumber);
+
+            if (code) {
+                modal.find('.modal-title').text('Edit Person' +  name);
+                modal.find('#Code').val(code);
+                modal.find('input[name="Name"]').val(name);
+                modal.find('input[name="Surname"]').val(surname);
+                modal.find('input[name="IdNumber"]').val(idNumber);
+                
+                //Set form action to EditPerson
+                $('#personForm').attr('action', '/Person/EditPerson');
+
+            } else {
+                modal.find('.modal-title').text("Add New Person");
+                modal.find('#Code').val(0);
+                modal.find('input[name="Name]').val('');
+                modal.find('input[name="Surname"]').val('');
+                modal.find('input[name="IdNumber"]').val('');
+
+                //Set form action to CreatePerson 
+                $('#personForm').attr('action', '/Person/CreatePerson');
+            }
+
+            
         })
     </script>
 }

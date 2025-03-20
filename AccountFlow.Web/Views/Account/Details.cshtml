@@ -7,7 +7,7 @@
 
 <h3>Transactions</h3>
 
-<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addOrEditTransactionModal">
     Add Transaction
 </button>
 
@@ -80,3 +80,5 @@
         }
     </tbody>
 </table>
+
+<partial name="_AddOrEditTransactionModal" model="new Transaction()" />

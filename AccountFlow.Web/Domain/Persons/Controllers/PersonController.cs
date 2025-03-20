@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using AccountFlow.Web.Domain.Persons.Models;
 using AccountFlow.Web.Domain.Persons.Repositories;
 using AccountFlow.Web.ViewModels.Persons;
@@ -57,7 +58,7 @@ namespace AccountFlow.Web.Domain.Persons.Controllers
                 return NotFound();
             }
 
-            return PartialView("_EditPersonModal", person); // Return the modal with person data
+            return PartialView("_PersonModal", person); // Return the modal with person data
         }
 
 
@@ -87,20 +88,19 @@ namespace AccountFlow.Web.Domain.Persons.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePerson(Person model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-
-                var newPerson = new Person
-                {
-                    Name = model.Name,
-                    Surname = model.Surname,
-                    IdNumber = model.IdNumber
-                };
-
-                await personRepository.CreateAsync(newPerson);
-
                 return RedirectToAction("List");
             }
+
+            var newPerson = new Person
+            {
+                Name = model.Name,
+                Surname = model.Surname,
+                IdNumber = model.IdNumber
+            };
+
+            await personRepository.CreateAsync(newPerson);
             return RedirectToAction("List");
 
         }

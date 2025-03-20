@@ -8,9 +8,10 @@
                 <button class="btn-close" type="button" data-bs-dismmiss="modal" arial-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form asp-controller="Account" asp-action="CreateAccount" method="post">
+                <form  id="accountForm" method="post">
 
                     <div class="md-3">
+                        <input type="hidden" id="AccountCode" name="Code" value="@Model?.Code" />
                         <input type="hidden" name="PersonCode" value="@Model.PersonCode" />
                         <div class="mb-3">
                             <label class="form-label">Account Number</label>

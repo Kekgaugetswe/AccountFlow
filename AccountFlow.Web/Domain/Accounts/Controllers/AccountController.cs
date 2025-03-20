@@ -40,14 +40,49 @@ namespace AccountFlow.Web.Domain.Accounts.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("CreateAccount")]
+
         public async Task<IActionResult> CreateAccount(Account account)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Details","Person",new {id = account.PersonCode});
+                
+                return RedirectToAction("Details", "Person", new { id = account.PersonCode });
             }
             await repository.CreateAccountAsync(account);
-            return RedirectToAction("Details","Person",new {id = account.PersonCode});
+            return RedirectToAction("Details", "Person", new { id = account.PersonCode });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditAccount(int code)
+        {
+            var account = await repository.GetAccountByIdAsync(code);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            return PartialView("_AddOrEditAccountModal", account);
+
+        }
+        [HttpPost]
+        [Route("EditAccount")]
+        public async Task<IActionResult> EditAccount(Account account)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(account);
+            }
+            var accountDto = await repository.GetAccountByIdAsync(account.Code);
+            if (account != null)
+            {
+                accountDto.AccountNumber = account.AccountNumber;
+
+                await repository.UpdateAccountAsync(accountDto);
+                return RedirectToAction("Details", "Person", new { id = account.Code });
+            }
+
+            return NotFound();
         }
 
     }

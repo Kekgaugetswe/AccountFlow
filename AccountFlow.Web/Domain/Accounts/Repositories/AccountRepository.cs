@@ -23,8 +23,15 @@ public class AccountRepository(DataContext context) : IAccountRepository
 
     public async Task CreateAccountAsync(Account account)
     {
-       await context.Accounts.AddAsync(account);
-       await context.SaveChangesAsync();
-       
+        await context.Accounts.AddAsync(account);
+        await context.SaveChangesAsync();
+
     }
+
+    public async Task UpdateAccountAsync(Account account)
+    {
+        context.Accounts.Update(account);
+        await context.SaveChangesAsync();
+    }
+
 }
