@@ -1,13 +1,14 @@
-﻿@model AccountFlow.Web.ViewModels.Accounts.AccountViewModel
+﻿@model Account
 
 <h1>Account Details for @Model.AccountNumber</h1>
 
-<p>Account Balance: @Model.Balance</p>
-<p>Account Holder: @Model.PersonName</p>
+<p>Account Balance: @Model.OutstandingBalance</p>
+<p>Account Holder: @Model.Person?.Name</p>
 
 <h3>Transactions</h3>
 
-<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addOrEditTransactionModal">
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-accountCode="@Model.Code"
+    data-bs-target="#addOrEditTransactionModal">
     Add Transaction
 </button>
 
@@ -40,11 +41,19 @@
                             ...
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <!-- Approve Button -->
+
                             <li>
-                                <form asp-controller="Transaction" asp-action="Approve" asp-route-id="@transaction.Code"
+                                <form asp-controller="Transaction" asp-action="Reverse" asp-route-id="@transaction.Code"
                                     method="post">
-                                    <button type="submit" class="dropdown-item">Approve</button>
+                                    <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#addOrEditTransactionModal" 
+                                        data-code="@transaction.Code"
+                                        data-accountcode="@transaction.AccountCode"
+                                        data-transactiondate="@transaction.TransactionDate.ToString("yyyy-MM-dd")"
+                                        data-capturedate="@transaction.CaptureDate.ToString("yyyy-MM-dd")"
+                                        data-amount="@transaction.Amount" data-description="@transaction.Description">
+                                        Edit
+                                    </button>
                                 </form>
                             </li>
 
@@ -82,3 +91,62 @@
 </table>
 
 <partial name="_AddOrEditTransactionModal" model="new Transaction()" />
+
+@section Scripts {
+    <script>
+        $('#addOrEditTransactionModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var code = button.data('code'); //transaction code
+            var accountCode = button.data('accountcode'); // account code
+            var transactionDate = button.data('transactiondate'); // transaction date
+            var captureDate = button.data('captureDate'); // capture date 
+            var amount = button.data('amount'); // transaction amount
+            var description = button.data('description'); // transaction 
+
+
+
+            var modal = $(this);
+
+            if (code) {
+                modal.find('.modal-title').text('Edit Transaction');
+                modal.find('#AccountCode').val(accountCode);
+                modal.find("#TransactionCode").val(code);
+                modal.find('input[name="TransactionDate"]').val(transactionDate);
+                modal.find('input[name="Amount"]').val(amount);
+                modal.find('input[name="CaptureDate"]').val(captureDate);
+                modal.find('textarea[name="Description"]').val(description);
+                modal.find('#transcationModal').text('Update Transaction');
+
+                console.log("Account Code:", accountCode); // Debugging output
+                console.log("Transaction Code:", code);
+                console.log("Transaction Date:", transactionDate);
+                console.log("Capture Date:", captureDate);
+                console.log("Amount:", amount);
+                console.log("Description:", description);
+
+                $('#transactionForm').attr('action', '/Transaction/EditTransaction')
+            } else {
+                modal.find('.modal-title').text('Add Transaction');
+                modal.find('#AccountCode').val(accountCode);
+                modal.find("#TransactionCode").val(0);
+                modal.find('input[name="TransactionDate"]').val('');
+                modal.find('input[name="Amount"]').val(0);
+                modal.find('input[name="CaptureDate"]').val(captureDate);
+                modal.find('textarea[name="Description"]').val('');
+                modal.find('#transcationModal').text('Add Transaction');
+
+
+                console.log("Account Code:", accountCode); // Debugging output
+                console.log("Transaction Code:", code);
+                console.log("Transaction Date:", transactionDate);
+                console.log("Capture Date:", captureDate);
+                console.log("Amount:", amount);
+                console.log("Description:", description);
+
+                $('#transactionForm').attr('action', '/Transaction/CreateTransaction')
+            }
+
+        });
+
+    </script>
+}

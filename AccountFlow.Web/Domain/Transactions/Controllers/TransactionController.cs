@@ -24,13 +24,14 @@ namespace AccountFlow.Web.Domain.Transactions.Controllers
         }
 
         [HttpPost]
+        [Route("CreateTransaction")]
         public async Task<IActionResult> CreateTransaction(Transaction transaction)
         {
             if (!ModelState.IsValid)
-                return RedirectToAction("Details", "Acccount", new { code = transaction.AccountCode });
-            
+                return RedirectToAction("Details", "Account", new { code = transaction.AccountCode });
+
             await repository.CreateTransactionAsync(transaction);
-            return RedirectToAction("Details", "Acccount", new { code = transaction.AccountCode });
+            return RedirectToAction("Details", "Account", new { code = transaction.AccountCode });
         }
 
         [HttpGet]
@@ -42,9 +43,10 @@ namespace AccountFlow.Web.Domain.Transactions.Controllers
         }
 
         [HttpPost]
+        [Route("EditTransaction")]
         public async Task<IActionResult> EditTransaction(Transaction transaction)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return RedirectToAction("Details", "Account", new { code = transaction.AccountCode });
             }
@@ -54,9 +56,12 @@ namespace AccountFlow.Web.Domain.Transactions.Controllers
             {
                 transactionDto.TransactionDate = transaction.TransactionDate;
                 transactionDto.Description = transaction.Description;
+                await repository.UpdateTransactionASync(transactionDto);
                 return RedirectToAction("Details", "Account", new { code = transaction.AccountCode });
             }
             return NotFound();
         }
+
+        
     }
 }

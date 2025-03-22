@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AccountFlow.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc096745b755728356cfa57a5ad49eeb193af2fc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+84ec191c5a7b48437cd8b32dd54916cb9bd3a5b8")]
 [assembly: System.Reflection.AssemblyProductAttribute("AccountFlow.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AccountFlow.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

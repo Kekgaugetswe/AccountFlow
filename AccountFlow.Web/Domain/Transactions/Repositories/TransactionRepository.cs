@@ -31,14 +31,21 @@ public class TransactionRepository(DataContext context) : ITransactionRepository
 
     public async Task CreateTransactionAsync(Transaction transaction)
     {
+
+        if (transaction.CaptureDate ==DateTime.MinValue)
+        {
+            transaction.CaptureDate =DateTime.Now;
+
+        }
+
         await context.Transactions.AddAsync(transaction);
         await context.SaveChangesAsync();
     }
 
     public async Task UpdateTransactionASync(Transaction transaction)
     {
-         context.Transactions.Update(transaction);
-         await context.SaveChangesAsync();
+        context.Transactions.Update(transaction);
+        await context.SaveChangesAsync();
     }
 
 

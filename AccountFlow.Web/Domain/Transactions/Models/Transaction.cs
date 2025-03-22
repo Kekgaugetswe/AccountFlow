@@ -18,10 +18,10 @@ public class Transaction
     public DateTime TransactionDate { get; set; }
 
     [Column("capture_date")]
-    public DateTime CaptureDate { get; set; }
+    public DateTime CaptureDate { get; set; } = DateTime.UtcNow;
     public decimal Amount { get; set; }
-    public string Description { get; set; }
+    public string? Description { get; set; }
     [ForeignKey("AccountCode")]
-    public Account Account { get; set; }
+    public Account? Account { get; set; }
 
 }
