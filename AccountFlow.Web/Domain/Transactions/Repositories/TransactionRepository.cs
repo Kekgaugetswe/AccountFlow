@@ -32,9 +32,9 @@ public class TransactionRepository(DataContext context) : ITransactionRepository
     public async Task CreateTransactionAsync(Transaction transaction)
     {
 
-        if (transaction.CaptureDate ==DateTime.MinValue)
+        if (transaction.CaptureDate == DateTime.MinValue)
         {
-            transaction.CaptureDate =DateTime.Now;
+            transaction.CaptureDate = DateTime.Now;
 
         }
 
@@ -49,4 +49,15 @@ public class TransactionRepository(DataContext context) : ITransactionRepository
     }
 
 
+    public async Task DeleteAsync(int id)
+    {
+        var transaction = await context.Transactions.FindAsync(id);
+        if (transaction != null)
+        {
+            context.Transactions.Remove(transaction);
+            await context.SaveChangesAsync();
+        }
+    }
 }
+
+

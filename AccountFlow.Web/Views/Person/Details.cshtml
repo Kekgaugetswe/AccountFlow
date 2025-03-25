@@ -22,7 +22,8 @@
 </table>
 
 <h3>Accounts:</h3>
-<button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-personcode="@Model.Code" data-bs-target="#addOrEditAccountModal">
+<button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-personcode="@Model.Code"
+    data-bs-target="#addOrEditAccountModal">
     Add Account
 </button>
 
@@ -54,14 +55,12 @@
                             Edit
                         </button>
 
-                        <!-- Delete/Close Button -->
-                        <form asp-controller="Account" asp-action="Delete" asp-route-id="@account.Code" method="post"
-                            class="d-inline">
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to close this account?');">
-                                Close
-                            </button>
-                        </form>
+                        <!-- Close Account Button -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#confirmCloseAccountModal" data-accountid="@account.Code">
+                            Close
+                        </button>
+
                     </td>
                 </tr>
             }
@@ -74,6 +73,7 @@ else
 }
 
 <partial name="_AddOrEditAccountModal" model="new Account()" />
+<partial name="_ConfirmCloseAccountModal" />
 
 
 @section Scripts {
@@ -115,6 +115,29 @@ else
                 // Set form action to SaveAccount
                 $('#accountForm').attr('action', '/Account/CreateAccount');
             }
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var confirmCloseModal = document.getElementById("confirmCloseAccountModal");
+
+            confirmCloseModal.addEventListener("show.bs.modal", function (event) {
+                var button = event.relatedTarget; // Button that triggered the modal
+                var accountId = button.getAttribute("data-accountid"); // Get account ID
+
+                console.log("Closing Account ID:", accountId); // Debugging output
+
+                var hiddenInput = document.getElementById("closeAccountId");
+                if (hiddenInput) {
+                    hiddenInput.value = accountId;
+                }
+
+                // Set form action dynamically
+                var closeForm = document.getElementById("closeAccountForm");
+                if (closeForm) {
+                    closeForm.action = "/Account/Delete"; // Ensure correct action is set
+                }
+            });
         });
     </script>
 

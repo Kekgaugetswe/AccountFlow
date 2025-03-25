@@ -9,7 +9,11 @@ public interface IPersonRepository
 
     Task<Person> GetPersonByCodeAsync(int code);
 
+    Task<Person> GetPersonByIdNumberAsync(string idNumber);
+
     Task CreateAsync(Person person);
     Task UpdateAsync(Person person);
-    Task DeleteAsync(int id);
+    Task<(bool Success, string Message)> DeleteAsync(int id);
+
+
 }

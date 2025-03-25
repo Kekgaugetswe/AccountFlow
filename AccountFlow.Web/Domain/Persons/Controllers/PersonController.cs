@@ -1,22 +1,23 @@
 using System.Diagnostics;
 using AccountFlow.Web.Domain.Persons.Models;
 using AccountFlow.Web.Domain.Persons.Repositories;
+using AccountFlow.Web.Domain.Persons.Services;
 using AccountFlow.Web.ViewModels.Persons;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountFlow.Web.Domain.Persons.Controllers
 {
-    public class PersonController : Controller
+    public class PersonController(IPersonRepository personRepository, IPersonService service, IHttpContextAccessor httpContextAccessor) : Controller
     {
-        private readonly IPersonRepository personRepository;
-
-        public PersonController(IPersonRepository personRepository)
-        {
-            this.personRepository = personRepository;
-        }
 
         public async Task<IActionResult> List(string searchTerm, int pageNumber = 1, int pageSize = 10)
         {
+            if (httpContextAccessor.HttpContext.Session.GetString("LoggedIn") != "true")
+            {
+                // Redirect to the login page if the user is not logged in
+                TempData["ErrorMessage"] = "You must log in to access this page.";
+                return RedirectToAction("Login", "UserManagement");
+            }
             var (persons, totalCount) = await personRepository.GetAllPersonsAsync(searchTerm, pageNumber, pageSize);
 
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
@@ -42,7 +43,8 @@ namespace AccountFlow.Web.Domain.Persons.Controllers
 
             if (person == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Person not found.";
+                return RedirectToAction("List");
             }
 
             return View(person);
@@ -55,7 +57,8 @@ namespace AccountFlow.Web.Domain.Persons.Controllers
 
             if (person == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Person not found.";
+                return RedirectToAction("List");
             }
 
             return PartialView("_PersonModal", person); // Return the modal with person data
@@ -67,7 +70,8 @@ namespace AccountFlow.Web.Domain.Persons.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model); // Return view with errors if validation fails
+                TempData["ErrorMessage"] = "Invalid data provided.";
+                return RedirectToAction("List");
             }
 
             var person = await personRepository.GetPersonByCodeAsync(model.Code);
@@ -79,10 +83,12 @@ namespace AccountFlow.Web.Domain.Persons.Controllers
                 person.IdNumber = model.IdNumber;
 
                 await personRepository.UpdateAsync(person);
-                return RedirectToAction("List"); // Redirect back to list after save
+                TempData["SuccessMessage"] = "Person updated successfully!";
+                return RedirectToAction("List");
             }
 
-            return NotFound(); // Return NotFound if person is not found
+            TempData["ErrorMessage"] = "Person not found.";
+            return RedirectToAction("List");
         }
 
         [HttpPost]
@@ -90,20 +96,50 @@ namespace AccountFlow.Web.Domain.Persons.Controllers
         {
             if (!ModelState.IsValid)
             {
+                TempData["ErrorMessage"] = "Invalid data provided.";
                 return RedirectToAction("List");
             }
 
-            var newPerson = new Person
+            try
             {
-                Name = model.Name,
-                Surname = model.Surname,
-                IdNumber = model.IdNumber
-            };
+                // Call the service method to create the person
+                await service.CreatePersonAsync(model);
 
-            await personRepository.CreateAsync(newPerson);
+                // If no exception is thrown, assume success
+                TempData["SuccessMessage"] = "Person created successfully!";
+            }
+            catch (ArgumentException ex)
+            {
+                // Handle specific known exceptions, such as the ID number being invalid or already taken
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                // Handle any other unexpected exceptions
+                TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
+            }
+
             return RedirectToAction("List");
-
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePerson(int id)
+        {
+            var (success, message) = await personRepository.DeleteAsync(id);
+
+            if (success)
+            {
+                TempData["SuccessMessage"] = message;
+            }
+            else
+            {
+                TempData["ErrorMessage"] = message;
+            }
+
+            return RedirectToAction("List");
+        }
+
 
 
     }

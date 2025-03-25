@@ -34,4 +34,25 @@ public class AccountRepository(DataContext context) : IAccountRepository
         await context.SaveChangesAsync();
     }
 
+    public async Task<bool> DeleteAccountAsync(int accountId)
+    {
+        var account = await context.Accounts.FindAsync(accountId);
+        if (account == null)
+        {
+            return false;
+        }
+
+        context.Accounts.Remove(account);
+        await context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<Account> GetAccountByAccountNumberAsync(string accountNumber)
+    {
+        return await context.Accounts
+                             .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+    }
+
+
+
 }

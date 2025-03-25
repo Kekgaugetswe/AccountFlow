@@ -16,6 +16,8 @@ public class Account
     public string AccountNumber { get; set; } = string.Empty;
 
     [Column("outstanding_balance")]
+    [Required]
+     [Range(0, double.MaxValue, ErrorMessage = "Initial balance cannot be less than zero.")]
     public decimal OutstandingBalance { get; set; }
 
     [ForeignKey("PersonCode")]

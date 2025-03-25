@@ -12,7 +12,8 @@ public class Person
     public string? Name { get; set; }
     public string? Surname { get; set; }
     [Column("id_number")]
-    public string? IdNumber { get; set; }
+    [Required]
+    public string IdNumber { get; set; } = string.Empty;
     public ICollection<Account>? Accounts { get; set; }
 
     

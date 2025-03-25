@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/wwwroot/Images/accountflow.jpg",
+      "PackagePath": "staticwebassets/Images/accountflow.jpg"
+    },
+    {
       "Id": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

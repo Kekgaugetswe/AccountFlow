@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NnFgSY9qdD0OkN1+tiqPTiP4haZqTkcP2A8BqCGWPuM=",
+  "Hash": "imRepp7fU/COmWJBxkg8vvvQpL4fuFILvVNm/w1NAPk=",
   "Source": "AccountFlow.Web",
   "BasePath": "_content/AccountFlow.Web",
   "Mode": "Default",
@@ -34,6 +34,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/site.css"
+    },
+    {
+      "Identity": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/wwwroot/Images/accountflow.jpg",
+      "SourceId": "AccountFlow.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/wwwroot/",
+      "BasePath": "_content/AccountFlow.Web",
+      "RelativePath": "Images/accountflow.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/accountflow.jpg"
     },
     {
       "Identity": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/wwwroot/lib/bootstrap/css/bootstrap-grid.css",

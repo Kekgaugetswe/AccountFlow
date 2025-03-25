@@ -11,7 +11,8 @@
 </div>
 
 <div class="mb-3">
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-code="@Model.Person?.Code" data-bs-target="#addPersonModal">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-code="@Model.Person?.Code"
+        data-bs-target="#addPersonModal">
         Add New Person
     </button>
 </div>
@@ -51,6 +52,12 @@
                         Edit
                     </button>
 
+                    <!-- Delete Button with Confirmation Modal -->
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#confirmDeleteModal" data-id="@person.Code">
+                        Delete
+                    </button>
+
                 </td>
             </tr>
         }
@@ -71,6 +78,9 @@
 
 <!-- Add Person Modal -->
 <partial name="_PersonModal" model="new Person()" />
+
+<partial name="_DeleteConfirmationModal" />
+
 
 
 
@@ -94,12 +104,12 @@
             var modal = $(this);
 
             if (code) {
-                modal.find('.modal-title').text('Edit Person' +  name);
+                modal.find('.modal-title').text('Edit Person' + name);
                 modal.find('#Code').val(code);
                 modal.find('input[name="Name"]').val(name);
                 modal.find('input[name="Surname"]').val(surname);
                 modal.find('input[name="IdNumber"]').val(idNumber);
-                
+
                 //Set form action to EditPerson
                 $('#personForm').attr('action', '/Person/EditPerson');
 
@@ -114,7 +124,28 @@
                 $('#personForm').attr('action', '/Person/CreatePerson');
             }
 
-            
-        })
+
+        });
+
+        // Handle Delete Confirmation Modal
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);  // Button that triggered the modal
+            var personId = button.data('id');    // Extract info from data-id attribute
+            $('#deletePersonId').val(personId);  // Set the value in the hidden input
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var accountForm = document.getElementById("accountForm");
+
+            accountForm.addEventListener("submit", function (event) {
+                var balanceInput = document.querySelector("input[name='OutstandingBalance']");
+                var balanceValue = parseFloat(balanceInput.value);
+
+                if (isNaN(balanceValue) || balanceValue < 0) {
+                    alert("Initial balance cannot be less than zero.");
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
     </script>
 }

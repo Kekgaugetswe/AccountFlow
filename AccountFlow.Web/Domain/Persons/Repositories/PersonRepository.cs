@@ -35,6 +35,13 @@ public class PersonRepository : IPersonRepository
                                .FirstOrDefaultAsync(p => p.Code == code);
     }
 
+    public async Task<Person?> GetPersonByIdNumberAsync(string idNumber)
+    {
+        var person = await _context.Persons.Include(p => p.Accounts)
+                               .FirstOrDefaultAsync(p => p.IdNumber == idNumber);
+        return person ?? null;
+    }
+
     public async Task CreateAsync(Person person)
     {
         await _context.Persons.AddAsync(person);
@@ -47,17 +54,27 @@ public class PersonRepository : IPersonRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+
+    public async Task<(bool Success, string Message)> DeleteAsync(int id)
     {
-        var person = await _context.Persons.FindAsync(id);
-        if (person != null)
+        var person = await _context.Persons
+            .Include(p => p.Accounts)
+            .FirstOrDefaultAsync(p => p.Code == id);
+
+        if (person == null)
         {
-            _context.Persons.Remove(person);
-            await _context.SaveChangesAsync();
+            return (false, "Person not found.");
         }
+
+        if (person.Accounts.Any())
+        {
+            return (false, "Person cannot be deleted because they have linked accounts.");
+        }
+
+        _context.Persons.Remove(person);
+        await _context.SaveChangesAsync();
+        return (true, "Person deleted successfully!");
     }
-
-
 
 
 }
