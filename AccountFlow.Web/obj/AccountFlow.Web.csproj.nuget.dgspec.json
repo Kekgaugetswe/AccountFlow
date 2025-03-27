@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/AccountFlow.Web.csproj": {}
+    "/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/AccountFlow.Web.csproj": {}
   },
   "projects": {
-    "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/AccountFlow.Web.csproj": {
+    "/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/AccountFlow.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/AccountFlow.Web.csproj",
+        "projectUniqueName": "/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/AccountFlow.Web.csproj",
         "projectName": "AccountFlow.Web",
-        "projectPath": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/AccountFlow.Web.csproj",
+        "projectPath": "/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/AccountFlow.Web.csproj",
         "packagesPath": "/Users/KekgaugetsweS/.nuget/packages/",
-        "outputPath": "/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/obj/",
+        "outputPath": "/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/KekgaugetsweS/.nuget/NuGet/NuGet.Config"
@@ -44,15 +44,33 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[8.0.14, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             }
           },
           "imports": [

@@ -17,91 +17,123 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AccountFlow.Web
 build_property.RootNamespace = AccountFlow.Web
-build_property.ProjectDir = /Users/KekgaugetsweS/Development/learning/AccountFlow.Web/
+build_property.ProjectDir = /Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/KekgaugetsweS/Development/learning/AccountFlow.Web
+build_property.MSBuildProjectDirectory = /Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/About/About.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvQWNjb3VudC9BY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Areas/Identity/Pages/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvQWNjb3VudC9fVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/About/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWJvdXQvQWJvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Account/Details.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Account/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9EZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Account/List.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Account/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9MaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Contact/Contact.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Contact/Contact.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29udGFjdC9Db250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Home/Index.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Person/Details.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Person/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGVyc29uL0RldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Person/List.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Person/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGVyc29uL0xpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Shared/_AddOrEditAccountModal.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_AddOrEditAccountModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19BZGRPckVkaXRBY2NvdW50TW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Shared/_AddorEditTransactionModal.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_AddorEditTransactionModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19BZGRvckVkaXRUcmFuc2FjdGlvbk1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Shared/_ConfirmCloseAccountModal.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_ConfirmCloseAccountModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Db25maXJtQ2xvc2VBY2NvdW50TW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Shared/_ConfirmReverseModal.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_ConfirmReverseModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Db25maXJtUmV2ZXJzZU1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Shared/_DeleteConfirmationModal.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_DeleteConfirmationModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19EZWxldGVDb25maXJtYXRpb25Nb2RhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Shared/_layout.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19sYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Shared/_PersonModal.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_PersonModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19QZXJzb25Nb2RhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Transaction/Details.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Transaction/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNhY3Rpb24vRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/Transaction/List.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/Transaction/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNhY3Rpb24vTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/UserManagement/Login.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/UserManagement/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnQvTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/UserManagement/Register.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/UserManagement/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnQvUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/_ViewImports.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/KekgaugetsweS/Development/learning/AccountFlow.Web/Views/_ViewStart.cshtml]
+[/Users/KekgaugetsweS/Development/AccountFlow/AccountFlow.Web/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

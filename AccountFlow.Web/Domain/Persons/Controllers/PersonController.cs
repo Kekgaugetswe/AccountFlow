@@ -7,17 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AccountFlow.Web.Domain.Persons.Controllers
 {
-    public class PersonController(IPersonRepository personRepository, IPersonService service, IHttpContextAccessor httpContextAccessor) : Controller
+    public class PersonController(IPersonRepository personRepository, IPersonService service) : Controller
     {
 
         public async Task<IActionResult> List(string searchTerm, int pageNumber = 1, int pageSize = 10)
         {
-            if (httpContextAccessor.HttpContext.Session.GetString("LoggedIn") != "true")
-            {
-                // Redirect to the login page if the user is not logged in
-                TempData["ErrorMessage"] = "You must log in to access this page.";
-                return RedirectToAction("Login", "UserManagement");
-            }
+           
             var (persons, totalCount) = await personRepository.GetAllPersonsAsync(searchTerm, pageNumber, pageSize);
 
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
