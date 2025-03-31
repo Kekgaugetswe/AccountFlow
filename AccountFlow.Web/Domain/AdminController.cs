@@ -12,11 +12,13 @@ namespace AccountFlow.Web.Domain
 
         private readonly DataContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AdminController(DataContext context, UserManager<ApplicationUser> userManager)
+        public AdminController(DataContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
 
@@ -51,6 +53,48 @@ namespace AccountFlow.Web.Domain
             }
 
             return RedirectToAction("Index", "Home"); // Redirect to the homepage or wherever you'd like
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignAdminRoleToUsers()
+        {
+            // Ensure the "Admin" role exists
+            if (!await _roleManager.RoleExistsAsync("Admin"))
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+
+            var users = await _userManager.Users.ToListAsync();
+
+            foreach (var user in users)
+            {
+                if (!await _userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
+
+            // Redirect to home page after updating roles
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EnsureRolesExist()
+        {
+            // Ensure "Admin" and "User" roles exist
+            await EnsureRoleExists("Admin");
+            await EnsureRoleExists("User");
+
+            // Redirect to home page after ensuring roles exist
+            return RedirectToAction("Index", "Home");
+        }
+
+        private async Task EnsureRoleExists(string roleName)
+        {
+            if (!await _roleManager.RoleExistsAsync(roleName))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(roleName));
+            }
         }
     }
 }

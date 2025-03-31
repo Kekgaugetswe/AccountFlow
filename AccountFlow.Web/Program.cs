@@ -31,7 +31,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>{
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
 
 builder.Services.ConfigureApplicationCookie(options => {
-    options.LoginPath ="/account/Login";
+    options.LoginPath ="/usermanagement/Login";
     options.AccessDeniedPath = "/accounth/AccessDenied";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     options.SlidingExpiration =true;
@@ -51,10 +51,10 @@ var app = builder.Build();
 // Enable session middleware
 
 // Enable routing
-app.UseStaticFiles();
-app.UseAuthentication();
 app.UseRouting();
 app.UseStaticFiles();
+app.UseAuthentication();
+app.UseAuthorization();
  
 if (app.Environment.IsDevelopment())
 {

@@ -23,7 +23,7 @@ public class PersonRepository : IPersonRepository
 
         int totalCount = await query.CountAsync();
 
-        var persons = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        var persons = await query.OrderByDescending(p => p.Code).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
         return (persons, totalCount);
     }

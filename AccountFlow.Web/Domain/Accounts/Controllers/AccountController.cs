@@ -80,22 +80,23 @@ public class AccountController : Controller
         if (!ModelState.IsValid)
         {
             TempData["ErrorMessage"] = "Invalid account details.";
-            return View(account);
+            return RedirectToAction("Details", "Person", new { id = account.PersonCode });
         }
 
         var accountDto = await repository.GetAccountByIdAsync(account.Code);
-        if (accountDto != null)
+        if (accountDto == null)
         {
-            accountDto.AccountNumber = account.AccountNumber;
-            await repository.UpdateAccountAsync(accountDto);
-
-            TempData["SuccessMessage"] = "Account updated successfully!";
-            return RedirectToAction("Details", "Person", new { id = account.Code });
+            TempData["ErrorMessage"] = "Account not found.";
+            return RedirectToAction("Details", "Person", new { id = account.PersonCode });
         }
 
-        TempData["ErrorMessage"] = "Account not found.";
-        return RedirectToAction("Details", "Person", new { id = account.Code });
+        accountDto.OutstandingBalance = account.OutstandingBalance;
+        await repository.UpdateAccountAsync(accountDto);
+
+        TempData["SuccessMessage"] = "Account updated successfully!";
+        return RedirectToAction("Details", "Person", new { id = account.PersonCode });
     }
+
 
     [HttpPost]
     [Route("Delete")]

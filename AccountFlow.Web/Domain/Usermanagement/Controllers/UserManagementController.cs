@@ -14,13 +14,16 @@ namespace AccountFlow.Web.Domain.Usermanagement.Controllers
 
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
         private DataContext _context;
 
-        public UserManagementController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, DataContext context)
+        public UserManagementController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, DataContext context, RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _context = context;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -44,7 +47,8 @@ namespace AccountFlow.Web.Domain.Usermanagement.Controllers
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user == null)
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
+                // Add error for incorrect username
+                ModelState.AddModelError(nameof(model.Username), "Invalid username or password.");
                 return View(model);
             }
 
@@ -52,9 +56,11 @@ namespace AccountFlow.Web.Domain.Usermanagement.Controllers
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
 
-            ModelState.AddModelError("", "Invalid login attempt.");
+            // Add error for incorrect password
+            ModelState.AddModelError(nameof(model.Password), "Invalid username or password.");
             return View(model);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -126,5 +132,83 @@ namespace AccountFlow.Web.Domain.Usermanagement.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> AssignRoles()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var roles = _roleManager.Roles?.ToList() ?? new List<IdentityRole>(); // Ensure roles list is not null
+
+            var userViewModels = new List<UserViewModel>();
+
+            foreach (var user in users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user) ?? new List<string>(); // Ensure roles are retrieved
+                userViewModels.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = userRoles.ToList() // Store assigned roles
+                });
+            }
+
+            var model = new AssignRolesViewModel
+            {
+                Users = userViewModels,
+                AvailableRoles = roles.Select(r => r.Name).ToList()
+            };
+
+            return View(model);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> AssignRoles(string userId, List<string> selectedRoles)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            await _userManager.AddToRolesAsync(user, selectedRoles);
+
+            return RedirectToAction("AssignRoles");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRoles(string userId, List<string> selectedRoles)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID is required.");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
+            // Remove only roles that are not in the new selection
+            var rolesToRemove = currentRoles.Except(selectedRoles);
+            await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+
+            // Add only roles that are newly selected
+            var rolesToAdd = selectedRoles.Except(currentRoles);
+            await _userManager.AddToRolesAsync(user, rolesToAdd);
+
+            return RedirectToAction("AssignRoles");
+        }
+
+
     }
 }

@@ -1,33 +1,50 @@
 using System.Diagnostics;
+using AccountFlow.Web.DataAccess;
 using AccountFlow.Web.Domain.Persons.Models;
 using AccountFlow.Web.Domain.Persons.Repositories;
 using AccountFlow.Web.Domain.Persons.Services;
 using AccountFlow.Web.ViewModels.Persons;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountFlow.Web.Domain.Persons.Controllers
 {
-    public class PersonController(IPersonRepository personRepository, IPersonService service) : Controller
+    [Authorize(Roles = "Admin,User")]
+    public class PersonController(IPersonRepository personRepository, IPersonService service, UserManager<ApplicationUser> userManager) : Controller
     {
 
         public async Task<IActionResult> List(string searchTerm, int pageNumber = 1, int pageSize = 10)
         {
-           
-            var (persons, totalCount) = await personRepository.GetAllPersonsAsync(searchTerm, pageNumber, pageSize);
 
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var user = await userManager.GetUserAsync(User);
 
-            // Pass the data to the view
-            var viewModel = new PersonViewModel
+            if (user == null) return RedirectToAction("Login", "UserManagement");
+
+            if (await userManager.IsInRoleAsync(user, "Admin"))
             {
-                Persons = persons,
-                SearchTerm = searchTerm,
-                CurrentPage = pageNumber,
-                TotalPages = totalPages,
-                PageSize = pageSize
-            };
 
-            return View(viewModel);
+                var (persons, totalCount) = await personRepository.GetAllPersonsAsync(searchTerm, pageNumber, pageSize);
+
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+                // Pass the data to the view
+                var viewModel = new PersonViewModel
+                {
+                    Persons = persons,
+                    SearchTerm = searchTerm,
+                    CurrentPage = pageNumber,
+                    TotalPages = totalPages,
+                    PageSize = pageSize
+                };
+
+                return View(viewModel);
+            }
+            else
+            {   
+                return RedirectToAction("Details", new {id = user.PersonCode});
+            }
+
 
         }
 

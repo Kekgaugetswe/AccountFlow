@@ -96,7 +96,7 @@ else
                 modal.find('.modal-title').text('Edit Account');
                 modal.find('#AccountCode').val(code);
                 modal.find('input[name="PersonCode"]').val(personCode);
-                modal.find('input[name="AccountNumber"]').val(accountNumber);
+                modal.find('input[name="AccountNumber"]').val(accountNumber).prop('readonly',true);
                 modal.find('input[name="OutstandingBalance"]').val(outstandingBalance);
                 modal.find('#accountModalSubmit').text('Update Account');
 
@@ -106,7 +106,7 @@ else
                 modal.find('.modal-title').text('Add New Account');
                 modal.find('#AccountCode').val(0);
                 modal.find('input[name="PersonCode"]').val(personCode);
-                modal.find('input[name="AccountNumber"]').val('');
+                modal.find('input[name="AccountNumber"]').val('').prop('readonly',false);
                 modal.find('input[name="OutstandingBalance"]').val('');
                 modal.find('#accountModalSubmit').text('Add Account');
 
