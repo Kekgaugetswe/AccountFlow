@@ -24,4 +24,6 @@ public class Transaction
     [ForeignKey("AccountCode")]
     public Account? Account { get; set; }
 
+    public bool IsDebit { get; set; }
+
 }

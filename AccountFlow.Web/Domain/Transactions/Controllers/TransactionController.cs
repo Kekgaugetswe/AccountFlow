@@ -26,7 +26,8 @@ namespace AccountFlow.Web.Domain.Transactions.Controllers
 
         [HttpPost]
         [Route("CreateTransaction")]
-        public async Task<IActionResult> CreateTransaction(Transaction transaction)
+        
+        public async Task<IActionResult> CreateTransaction(Transaction transaction, bool isDebit)
         {
             if (!ModelState.IsValid)
             {
@@ -36,7 +37,7 @@ namespace AccountFlow.Web.Domain.Transactions.Controllers
 
             try
             {
-                await transactionService.CreateTransactionAsync(transaction);
+                await transactionService.CreateTransactionAsync(transaction, isDebit);
                 TempData["SuccessMessage"] = "Transaction created successfully!";
             }
             catch (InvalidOperationException ex)
@@ -50,7 +51,6 @@ namespace AccountFlow.Web.Domain.Transactions.Controllers
 
             return RedirectToAction("Details", "Account", new { id = transaction.AccountCode });
         }
-
         [HttpGet]
         public async Task<IActionResult> EditTransaction(int code)
         {

@@ -6,11 +6,18 @@
 <p>Account Holder: @Model.Person?.Name</p>
 
 <h3>Transactions</h3>
+<div class="mb-3">
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#addOrEditTransactionModal" data-accountCode="@Model.Code" data-transactiontype="debit">
+        Debit
+    </button>
 
-<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-accountCode="@Model.Code"
-    data-bs-target="#addOrEditTransactionModal">
-    Add Transaction
-</button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+        data-bs-target="#addOrEditTransactionModal" data-accountCode="@Model.Code" data-transactiontype="credit">
+        Credit
+    </button>
+</div>
+
 
 <table class="table">
     <thead>
@@ -21,6 +28,8 @@
             <th>Captured Date</th>
 
             <th>Description</th>
+            <th>Transaction Type</th>
+
         </tr>
     </thead>
     <tbody>
@@ -33,6 +42,8 @@
                 <td>@transaction.CaptureDate</td>
 
                 <td>@transaction.Description</td>
+                <td>@(transaction.IsDebit ? "Debit": "Credit")</td>
+
                 <td>
                     <!-- View Button -->
                     <a asp-controller="Transaction" asp-action="Details" asp-route-id="@transaction.Code"
@@ -46,20 +57,8 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                            <li>
-                                <form asp-controller="Transaction" asp-action="Reverse" asp-route-id="@transaction.Code"
-                                    method="post">
-                                    <button type="button" class="dropdown-item" data-bs-toggle="modal" disabled="true"
-                                        data-bs-target="#addOrEditTransactionModal" data-code="@transaction.Code"
-                                        data-accountcode="@transaction.AccountCode"
-                                        data-transactiondate="@transaction.TransactionDate.ToString("yyyy-MM-dd")"
-                                        data-capturedate="@transaction.CaptureDate.ToString("yyyy-MM-dd")"
-                                        data-amount="@transaction.Amount" data-description="@transaction.Description">
-                                        Edit
-                                    </button>
-                                </form>
-                            </li>
-
+                            
+                           
                             <!-- Reverse Button -->
                             <li>
                                 <button type="button" class="dropdown-item" data-bs-toggle="modal"
@@ -90,9 +89,9 @@
             var captureDate = button.data('captureDate'); // capture date 
             var amount = button.data('amount'); // transaction amount
             var description = button.data('description'); // transaction 
-
-
-
+            var isDebit = button.data('transactiontype') === 'debit'; 
+            console.log("Is Debit:", isDebit); // Debugging output
+            // transaction type (debit or credit)
             var modal = $(this);
 
             if (code) {
@@ -114,14 +113,19 @@
 
                 $('#transactionForm').attr('action', '/Transaction/EditTransaction')
             } else {
-                modal.find('.modal-title').text('Add Transaction');
+                if(isDebit){
+                    modal.find('#IsDebit').val(isDebit);
+                    modal.find('.modal-title').text('Withdrawal Transaction');
+                }else{
+                    modal.find('#IsDebit').val(isDebit);
+                    modal.find('.modal-title').text('Deposit Transaction');
+                }
                 modal.find('#AccountCode').val(accountCode);
                 modal.find("#TransactionCode").val(0);
                 modal.find('input[name="TransactionDate"]').val('');
                 modal.find('input[name="Amount"]').val(0);
                 modal.find('input[name="CaptureDate"]').val(captureDate);
                 modal.find('textarea[name="Description"]').val('');
-                modal.find('#transcationModal').text('Add Transaction');
 
 
                 console.log("Account Code:", accountCode); // Debugging output

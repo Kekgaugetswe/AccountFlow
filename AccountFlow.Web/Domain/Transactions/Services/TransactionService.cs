@@ -11,21 +11,34 @@ public class TransactionService(ITransactionRepository transactionRepository, IA
     private readonly ITransactionRepository _transactionRepository = transactionRepository;
     private readonly IAccountRepository _accountRepository = accountRepository;
 
-    public async Task<bool> CreateTransactionAsync(Transaction transaction)
+    public async Task<bool> CreateTransactionAsync(Transaction transaction, bool isDebit)
     {
+        if (transaction.Amount <= 0)
+        {
+            throw new ArgumentException("Transaction amount must be greater than zero.");
+        }
         var account = await _accountRepository.GetAccountByIdAsync(transaction.AccountCode);
         if (account == null)
         {
             throw new ArgumentException("Account not found.");
         }
 
-        if (transaction.Amount > account.OutstandingBalance)
+        if (isDebit)
         {
-            throw new InvalidOperationException("Insufficient balance for this transaction.");
+            if (transaction.Amount > account.OutstandingBalance)
+            {
+                throw new InvalidOperationException("Insufficient balance for this transaction.");
+            }
+
+            // Deduct the transaction amount from the account's outstanding balance
+            account.OutstandingBalance -= transaction.Amount;
+        }
+        else
+        {
+            account.OutstandingBalance += transaction.Amount;
         }
 
-        // Deduct the transaction amount from the account's outstanding balance
-        account.OutstandingBalance -= transaction.Amount;
+
 
         // Save the transaction and update the account
         await _transactionRepository.CreateTransactionAsync(transaction);
@@ -48,9 +61,18 @@ public class TransactionService(ITransactionRepository transactionRepository, IA
         {
             throw new ArgumentException("Account not found.");
         }
+        if (transaction.IsDebit)
+        {
 
-        // Add back the reversed amount
-        account.OutstandingBalance += transaction.Amount;
+            //Reverse debit  amount(add back)
+            account.OutstandingBalance += transaction.Amount;
+        }
+        else
+        {
+            // Reverse credit amount( subtract)
+            account.OutstandingBalance -= transaction.Amount;
+
+        }
 
         // Remove transaction
         await _transactionRepository.DeleteAsync(transactionId);

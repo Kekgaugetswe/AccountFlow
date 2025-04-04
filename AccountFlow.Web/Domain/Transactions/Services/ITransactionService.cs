@@ -5,7 +5,7 @@ namespace AccountFlow.Web.Domain.Transactions.Services;
 
 public interface ITransactionService
 {
-    Task<bool> CreateTransactionAsync(Transaction transaction);
+    Task<bool> CreateTransactionAsync(Transaction transaction, bool isDebit);
 
     Task<bool> ReverseTransactionAsync(int transactionId);
 
