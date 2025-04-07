@@ -27,6 +27,27 @@ namespace AccountFlow.Web.Domain.Usermanagement.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var model = new List<UserViewModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                model.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = roles.ToList()
+                });
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -60,7 +81,48 @@ namespace AccountFlow.Web.Domain.Usermanagement.Controllers
             ModelState.AddModelError(nameof(model.Password), "Invalid username or password.");
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> AssignToUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var allRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+
+            var model = new AssignRolesToUserViewModel
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                AvailableRoles = allRoles,
+                SelectedRoles = userRoles.ToList()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignToUser(AssignRolesToUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
+            var rolesToRemove = currentRoles.Except(model.SelectedRoles);
+            var rolesToAdd = model.SelectedRoles.Except(currentRoles);
+
+            await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+            await _userManager.AddToRolesAsync(user, rolesToAdd);
+
+            return RedirectToAction("Index", "UserManagement");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
