@@ -32,7 +32,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>{
 
 builder.Services.ConfigureApplicationCookie(options => {
     options.LoginPath ="/usermanagement/Login";
-    options.AccessDeniedPath = "/accounth/AccessDenied";
+    options.AccessDeniedPath = "/account/AccessDenied";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     options.SlidingExpiration =true;
 });

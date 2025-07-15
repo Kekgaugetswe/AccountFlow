@@ -19,5 +19,4 @@ public class Person
     public virtual ApplicationUser? ApplicationUser { get; set; }
     public ICollection<Account>? Accounts { get; set; }
 
-
 }
